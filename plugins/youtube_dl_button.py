@@ -98,10 +98,21 @@ async def youtube_dl_call_back(bot, update):
     description = Translation.CUSTOM_CAPTION_UL_FILE.format(mention)
     if "fulltitle" in response_json:
         description = response_json["fulltitle"][:1021]
+        if description.startswith('www'):
+            description = ' '.join(description.split()[2:])
+            description = description + '\n\n Uploaded By: @HEVC_Moviesz  \n\n Join : 🔗 @Tamil_Links_Official 🔗'
+         
+        else:
+            description = description + '\n\n Uploaded By: @HEVC_Moviesz  \n\n Join : 🔗 @Tamil_Links_Official 🔗'
             # escape Markdown and special characters
     tmp_directory_for_each_user = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id)
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user)
+    if custom_file_name.startswith('www'):
+      custom_file_name = ' '.join(custom_file_name.split()[1:])
+      custom_file_name  = '@HEVC_Moviesz ' + custom_file_name
+    else:
+      custom_file_name  = '@HEVC_Moviesz ' + custom_file_name
     download_directory = tmp_directory_for_each_user + "/" + custom_file_name
     command_to_exec = []
     if tg_send_type == "audio":
